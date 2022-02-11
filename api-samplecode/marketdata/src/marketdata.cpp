@@ -171,7 +171,7 @@ int main() {
 
     doSleep(1000);
     mdClient->subscribeContract("CU3M-LME");
-    doSleep(1000);
+    doSleep(10000);
     mdClient->unsubscribeContract("CU3M-LME");
     doSleep(1000);
     // Destroy the instance and release resources
