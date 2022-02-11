@@ -13,9 +13,9 @@
 #endif
 
 static const char *TRADE_SERVER_URI = "tcp://192.168.101.225:40905";
-static const char *BROKER_ID = "broker_id";
-static const char *USER_ID = "user_id";
-static const char *USER_PASSWORD = "user_password";
+static const char *BROKER_ID = "SF001";
+static const char *USER_ID = "sfuser1";
+static const char *USER_PASSWORD = "8*MvhY!C";
 static const char *APP_ID = "app_id";
 static const char *AUTH_CODE = "auth_code";
 static const char *INVESTOR_ID = USER_ID;  // Investor id is mapped to user id in ATP

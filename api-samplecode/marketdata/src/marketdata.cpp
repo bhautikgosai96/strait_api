@@ -11,7 +11,7 @@
 #include <signal.h>    // To handle SIGPIPE
 #endif
 
-static const char *MD_SERVER_URI = "tcp://192.168.101.225:41213";
+static const char *MD_SERVER_URI = "tcp://119.136.26.197:41213";
 static const char *BROKER_ID = "SF001";
 static const char *USER_ID = "sfuser1";
 static const char *USER_PASSWORD = "8*MvhY!C";
@@ -167,6 +167,7 @@ int main() {
     Logger::info("[INFO] [%s:%3d]: Initial client: serverUri=%s, brokerID=%s, userID=%s version=%s.", __FUNCTION__, __LINE__,
         MD_SERVER_URI, BROKER_ID, USER_ID, CThostFtdcMdApi::GetApiVersion());
     pMdApi->Init();  // Start connecting
+
 
     doSleep(1000);
     mdClient->subscribeContract("CU3M-LME");
