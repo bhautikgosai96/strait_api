@@ -12,7 +12,7 @@
 #include <signal.h>    // To handle SIGPIPE
 #endif
 
-static const char *TRADE_SERVER_URI = "tcp://192.168.101.225:40905";
+static const char *TRADE_SERVER_URI = "tcp://119.136.26.197:40905";
 static const char *BROKER_ID = "SF001";
 static const char *USER_ID = "sfuser1";
 static const char *USER_PASSWORD = "8*MvhY!C";
