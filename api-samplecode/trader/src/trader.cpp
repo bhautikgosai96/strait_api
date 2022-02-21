@@ -46,7 +46,7 @@ public:
 protected:
     virtual void OnFrontConnected() {
         Logger::info("[INFO] [%s:%3d]: Front connected.", __FUNCTION__, __LINE__);
-        doAuthenticate();
+        //doAuthenticate();
     }
     virtual void OnFrontDisconnected(int reason) {
         logonState = LOGON_ABORTED;
