@@ -190,7 +190,7 @@ protected:
             Logger::info("[INFO] [%s:%3d]: No matched instrument info found.", __FUNCTION__, __LINE__);
             return;
         }
-        Logger::info("[INFO] [%s:%3d]: Instrument info: instrumentID=%s, exchangeID=%s, InstrumentName=%s, ExchangeInstID=%s, ProductID=%s, DeliveryYear=%d, DeliveryMonth=%d, MaxMarketOrderVolume=%d, MinMarketOrderVolume=%d, MaxLimitOrderVolume=%d, MinLimitOrderVolume=%d, VolumeMultiple=%d, PriceTick=%d, isTrading=%s, expireDate=%s, StartDelivDate=%s, EndDelivDate=%s, UnderlyingInstrID=%s, StrikePrice=%d, volumeMultiple=%d, exchangeInstID=%s.", __FUNCTION__, __LINE__,
+        Logger::info("[INFO] [%s:%3d]: Instrument info: instrumentID=%s, exchangeID=%s, InstrumentName=%s, ExchangeInstID=%s, ProductID=%s, DeliveryYear=%d, DeliveryMonth=%d, MaxMarketOrderVolume=%d, MinMarketOrderVolume=%d, MaxLimitOrderVolume=%d, MinLimitOrderVolume=%d, VolumeMultiple=%d, PriceTick=%d, isTrading=%s, expireDate=%s, StartDelivDate=%s, EndDelivDate=%s, UnderlyingInstrID=%s, StrikePrice=%f, volumeMultiple=%d, exchangeInstID=%s.", __FUNCTION__, __LINE__,
             inst->InstrumentID, inst->ExchangeID, inst->InstrumentName, inst->ExchangeInstID, inst->ProductID,  inst->DeliveryYear, inst->DeliveryMonth, inst->MaxMarketOrderVolume, inst->MinMarketOrderVolume, inst->MaxLimitOrderVolume, inst->MinLimitOrderVolume, inst->VolumeMultiple, inst->PriceTick, inst->IsTrading != 0 ? "true" : "false", inst->ExpireDate, inst->StartDelivDate, inst->EndDelivDate, inst->UnderlyingInstrID, inst->StrikePrice, inst->VolumeMultiple, inst->ExchangeInstID);
     }
     virtual void OnRspQryInvestorPosition(CThostFtdcInvestorPositionField *position, CThostFtdcRspInfoField *status, int requestID, bool isLast) {
