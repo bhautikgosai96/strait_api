@@ -46,7 +46,7 @@ public:
 protected:
     virtual void OnFrontConnected() {
         Logger::info("[INFO] [%s:%3d]: Front connected.", __FUNCTION__, __LINE__);
-        doAuthenticate();
+        doLogin();
     }
     virtual void OnFrontDisconnected(int reason) {
         logonState = LOGON_ABORTED;
@@ -354,7 +354,7 @@ public:
         CThostFtdcQryInstrumentField field;
         memset(&field, 0, sizeof(field));
         strcpy(field.ExchangeID, "");
-        strcpy(field.ExchangeInstID, "EVM");  // Enable this line to get CThostFtdcInstrumentField.VolumeMultiple with original currency
+        //strcpy(field.ExchangeInstID, "EVM");  // Enable this line to get CThostFtdcInstrumentField.VolumeMultiple with original currency
         strcpy(field.InstrumentID, instrumentID);
         strcpy(field.ProductID, "");
         int rtnCode = tradeApi->ReqQryInstrument(&field, nextRequestID());
@@ -478,9 +478,9 @@ int main() {
 
     Logger::info("[INFO] [%s:%3d]: Initial client: serverUri=%s, brokerID=%s, userID=%s, version=%s.", __FUNCTION__, __LINE__,
         TRADE_SERVER_URI, BROKER_ID, USER_ID, CThostFtdcTraderApi::GetApiVersion());
-    Logger::info("[INFO] [%s:%3d]: inti started");
+    
     pTraderApi->Init();  // Start connecting
-Logger::info("[INFO] [%s:%3d]: inti ended");
+
     doSleep(1000);
     tradeClient->queryInstrument("CU3M-LME");
     doSleep(3000);
