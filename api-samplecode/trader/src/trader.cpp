@@ -482,7 +482,11 @@ int main() {
     pTraderApi->Init();  // Start connecting
 
     doSleep(1000);
-    tradeClient->queryInstrument("NQ2206-CME");
+    tradeClient->queryInstrument("GC2202-CME");
+    doSleep(5000);
+    tradeClient->queryInstrument("GC2203-CME");
+    doSleep(5000);
+    tradeClient->queryInstrument("GC2204-CME");
     doSleep(5000);
     // tradeClient->insertOrder("CU3M-LME", true, 3900.0, 3);
     // doSleep(1000);
