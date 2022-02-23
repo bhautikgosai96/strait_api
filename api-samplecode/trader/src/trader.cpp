@@ -482,7 +482,7 @@ int main() {
     pTraderApi->Init();  // Start connecting
 
     doSleep(1000);
-    tradeClient->queryInstrument("CU3M-LME");
+    tradeClient->queryInstrument("ES2203-CME");
     doSleep(3000);
     // tradeClient->insertOrder("CU3M-LME", true, 3900.0, 3);
     // doSleep(1000);
