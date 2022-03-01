@@ -498,7 +498,7 @@ int main() {
     // doSleep(1000);
     // tradeClient->queryTrade("CU3M-LME");
     // doSleep(1000);
-    tradeClient->queryInvestorPosition("");
+    tradeClient->queryInvestorPosition("GC2204-CME");
     doSleep(1000);
     // Destroy the instance and release resources
     pTraderApi->RegisterSpi(NULL);
