@@ -482,22 +482,22 @@ int main() {
     pTraderApi->Init();  // Start connecting
 
     doSleep(1000);
-    tradeClient->queryInstrument("GC2202-CME");
-    doSleep(5000);
-    tradeClient->queryInstrument("GC2203-CME");
-    doSleep(5000);
+    // tradeClient->queryInstrument("GC2202-CME");
+    // doSleep(5000);
+    // tradeClient->queryInstrument("GC2203-CME");
+    // doSleep(5000);
     tradeClient->queryInstrument("GC2204-CME");
     doSleep(5000);
-    // tradeClient->insertOrder("CU3M-LME", true, 3900.0, 3);
-    // doSleep(1000);
-    // tradeClient->queryOrder("CU3M-LME");
+    tradeClient->insertOrder("GC2204-CME", true, 3900.0, 3);
+    doSleep(1000);
+    tradeClient->queryOrder("GC2204-CME");
     // doSleep(1000);
     // tradeClient->replaceOrder("1", 3950.0, 5);
     // doSleep(1000);
     // tradeClient->cancelOrder("1");
     // doSleep(1000);
-    // tradeClient->queryTrade("CU3M-LME");
-    // doSleep(1000);
+    tradeClient->queryTrade("GC2204-CME");
+    doSleep(1000);
     tradeClient->queryInvestorPosition("GC2204-CME");
     doSleep(1000);
     // Destroy the instance and release resources
