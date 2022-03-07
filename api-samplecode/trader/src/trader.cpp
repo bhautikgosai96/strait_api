@@ -614,6 +614,7 @@ int main() {
     tradeClient->queryInstrumentMarginRate("GC2204-CME");
     doSleep(1000);
     tradeClient->queryInvestorPositionDetail("GC2204-CME");
+    doSleep(1000);
     // Destroy the instance and release resources
     pTraderApi->RegisterSpi(NULL);
     pTraderApi->Release();
