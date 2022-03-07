@@ -214,7 +214,27 @@ protected:
         Logger::info("[INFO] [%s:%3d]: Investor position info: instrumentID=%s, openCost=%f, positionCost=%f, position=%d, ydPosition=%d, closeProfit=%f.", __FUNCTION__, __LINE__,
             position->InstrumentID, position->OpenCost, position->PositionCost, position->Position, position->YdPosition, position->CloseProfit);
     }
-
+    virtual void OnRspQryInvestorPositionDetail(CThostFtdcInvestorPositionDetailField *positionDetail, CThostFtdcRspInfoField *status, int requestID, bool isLast) {
+            if (status != NULL && status->ErrorID != 0) {
+                Logger::info("[WARN] [%s:%3d]: Failed to query investor position detail info: errorID=%d, errorMsg=%s", __FUNCTION__, __LINE__,
+                    status->ErrorID, status->ErrorMsg);
+                return;
+            }
+            if (positionDetail == NULL) {
+                if (status == NULL) {
+                    Logger::info("[ERROR] [%s:%3d]: Invalid server response, got null pointer of investor position detail info.", __FUNCTION__, __LINE__);    // Should not happen
+                    return;
+                }
+                if (!isLast) { 
+                    Logger::info("[ERROR] [%s:%3d]: Invalid server response, got null pointer of investor position detail info.", __FUNCTION__, __LINE__);    // Should not happen
+                    return;
+                }
+                Logger::info("[INFO] [%s:%3d]: No matched investor position detail info found.", __FUNCTION__, __LINE__);
+                return;
+            }
+            Logger::info("[INFO] [%s:%3d]: Investor position detail info: instrumentID=%s, BrokerID=%s, InvestorID=%s, HedgeFlag=%s, Direction=%s, OpenDate=%s, Volume=%d, OpenPrice=%f, TradingDay=%s, ExchangeID=%s, LastSettlementPrice=%f, SettlementPrice=%f, TradeType=%s.", __FUNCTION__, __LINE__,
+                positionDetail->InstrumentID, positionDetail->BrokerID, positionDetail->InvestorID, positionDetail->HedgeFlag == THOST_FTDC_HF_Arbitrage ? "Arbitrage" : positionDetail->HedgeFlag == THOST_FTDC_HF_Arbitrage ? "Speculation" : "Hedge", positionDetail->Direction == THOST_FTDC_D_Buy ? "buy" : "sell", positionDetail->OpenDate, positionDetail->Volume, positionDetail->OpenPrice, positionDetail->TradingDay, positionDetail->ExchangeID, positionDetail->LastSettlementPrice, positionDetail->SettlementPrice, positionDetail->TradeType);
+        }
      virtual void OnRspQryTradingAccount(CThostFtdcTradingAccountField *account, CThostFtdcRspInfoField *status, int requestID, bool isLast) {
         if (status != NULL && status->ErrorID != 0) {
             Logger::info("[WARN] [%s:%3d]: Failed to query investor trading account info: errorID=%d, errorMsg=%s", __FUNCTION__, __LINE__,
@@ -423,6 +443,21 @@ public:
                 field.BrokerID, field.InvestorID, field.InstrumentID);
         }
     }
+    void queryInvestorPositionDetail(const char *instrumentID) {
+        ensureLogon();
+        CThostFtdcQryInvestorPositionDetailField field;
+        memset(&field, 0, sizeof(field));
+        strcpy(field.BrokerID, BROKER_ID);
+        strcpy(field.InvestorID, USER_ID);
+        strcpy(field.InstrumentID, instrumentID);
+        int rtnCode = tradeApi->ReqQryInvestorPositionDetail(&field, nextRequestID());
+        if (rtnCode != 0) {
+            Logger::info("[ERROR] [%s:%3d] Request failed: code=%d.", __FUNCTION__, __LINE__, rtnCode);
+        } else {
+            Logger::info("[INFO] [%s:%3d] Requested to query investor position detail: brokerID=%s, investorID=%s, instrumentID=%s.", __FUNCTION__, __LINE__,
+                field.BrokerID, field.InvestorID, field.InstrumentID);
+        }
+    }
     void queryTradingAccount() {
         ensureLogon();
         CThostFtdcQryTradingAccountField field;
@@ -578,6 +613,7 @@ int main() {
     doSleep(1000);
     tradeClient->queryInstrumentMarginRate("GC2204-CME");
     doSleep(1000);
+    tradeClient->queryInvestorPositionDetail("GC2204-CME");
     // Destroy the instance and release resources
     pTraderApi->RegisterSpi(NULL);
     pTraderApi->Release();
