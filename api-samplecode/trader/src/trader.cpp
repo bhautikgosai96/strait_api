@@ -233,8 +233,8 @@ protected:
             Logger::info("[INFO] [%s:%3d]: No matched investor trading account info found.", __FUNCTION__, __LINE__);
             return;
         }
-        Logger::info("[INFO] [%s:%3d]: Investor trading account info: BrokerID=%s, AccountID=%s, PreBalance=%f, Deposit=%f, Withdraw=%f, FrozenMargin=%f.", __FUNCTION__, __LINE__,
-            account->BrokerID, account->AccountID, account->PreBalance, account->Deposit, account->Withdraw, account->FrozenMargin);
+        Logger::info("[INFO] [%s:%3d]: Investor trading account info: BrokerID=%s, AccountID=%s, PreBalance=%f, Deposit=%f, Withdraw=%f, FrozenMargin=%f, FrozenCash=%f, CurrMargin=%f, Commission=%f, CloseProfit=%f, PositionProfit=%f, Balance=%f, Available=%f, TradingDay=%s, SettlementID=%d, Credit=%f, CurrencyID=%s.", __FUNCTION__, __LINE__,
+            account->BrokerID, account->AccountID, account->PreBalance, account->Deposit, account->Withdraw, account->FrozenMargin, account->FrozenCash, account->CurrMargin, account->Commission, account->CloseProfit, account->PositionProfit, account->Balance, account->Available, account->TradingDay, account->SettlementID, account->Credit, account->CurrencyID);
     }
     // Overwrite other api(s)
     // ...
@@ -527,14 +527,14 @@ int main() {
     doSleep(5000);
     tradeClient->insertOrder("GC2204-CME", true, 3900.0, 3);
     doSleep(1000);
-    tradeClient->queryOrder("GC2204-CME");
+    // tradeClient->queryOrder("GC2204-CME");
     // doSleep(1000);
     // tradeClient->replaceOrder("1", 3950.0, 5);
     // doSleep(1000);
     // tradeClient->cancelOrder("1");
     // doSleep(1000);
-    tradeClient->queryTrade("GC2204-CME");
-    doSleep(1000);
+    // tradeClient->queryTrade("GC2204-CME");
+    // doSleep(1000);
     tradeClient->queryInvestorPosition("GC2204-CME");
     doSleep(1000);
     tradeClient->queryTradingAccount();
