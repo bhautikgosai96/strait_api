@@ -214,6 +214,28 @@ protected:
         Logger::info("[INFO] [%s:%3d]: Investor position info: instrumentID=%s, openCost=%f, positionCost=%f, position=%d, ydPosition=%d, closeProfit=%f.", __FUNCTION__, __LINE__,
             position->InstrumentID, position->OpenCost, position->PositionCost, position->Position, position->YdPosition, position->CloseProfit);
     }
+
+     virtual void OnRspQryTradingAccount(CThostFtdcTradingAccountField *account, CThostFtdcRspInfoField *status, int requestID, bool isLast) {
+        if (status != NULL && status->ErrorID != 0) {
+            Logger::info("[WARN] [%s:%3d]: Failed to query investor trading account info: errorID=%d, errorMsg=%s", __FUNCTION__, __LINE__,
+                status->ErrorID, status->ErrorMsg);
+            return;
+        }
+        if (account == NULL) {
+            if (status == NULL) {
+                Logger::info("[ERROR] [%s:%3d]: Invalid server response, got null pointer of investor trading account info.", __FUNCTION__, __LINE__);    // Should not happen
+                return;
+            }
+            if (!isLast) { 
+                Logger::info("[ERROR] [%s:%3d]: Invalid server response, got null pointer of investor trading account info.", __FUNCTION__, __LINE__);    // Should not happen
+                return;
+            }
+            Logger::info("[INFO] [%s:%3d]: No matched investor trading account info found.", __FUNCTION__, __LINE__);
+            return;
+        }
+        Logger::info("[INFO] [%s:%3d]: Investor trading account info: BrokerID=%s, AccountID=%s, PreBalance=%f, Deposit=%f, Withdraw=%f, FrozenMargin=%f.", __FUNCTION__, __LINE__,
+            account->BrokerID, account->AccountID, account->PreBalance, account->Deposit, account->Withdraw, account->FrozenMargin);
+    }
     // Overwrite other api(s)
     // ...
 public:
@@ -380,6 +402,21 @@ public:
                 field.BrokerID, field.InvestorID, field.InstrumentID);
         }
     }
+    void queryTradingAccount() {
+        ensureLogon();
+        CThostFtdcQryTradingAccountField field;
+        memset(&field, 0, sizeof(field));
+        strcpy(field.BrokerID, BROKER_ID);
+        strcpy(field.InvestorID, INVESTOR_ID);
+        strcpy(field.CurrencyID, "");  
+                int rtnCode = tradeApi->ReqQryTradingAccount(&field, nextRequestID());
+        if (rtnCode != 0) {
+            Logger::info("[ERROR] [%s:%3d] Request failed: code=%d.", __FUNCTION__, __LINE__, rtnCode);
+        } else {
+            Logger::info("[INFO] [%s:%3d] Requested to query trading account info: brokerID=%s, investorID=%s.", __FUNCTION__, __LINE__,
+                field.BrokerID, field.InvestorID);
+        }
+    }
     void ensureLogon() {
         const int MAX_ATTEMPT_TIMES = 100;
         int tryTimes = 0;
@@ -499,6 +536,8 @@ int main() {
     tradeClient->queryTrade("GC2204-CME");
     doSleep(1000);
     tradeClient->queryInvestorPosition("GC2204-CME");
+    doSleep(1000);
+    tradeClient->queryTradingAccount();
     doSleep(1000);
     // Destroy the instance and release resources
     pTraderApi->RegisterSpi(NULL);
