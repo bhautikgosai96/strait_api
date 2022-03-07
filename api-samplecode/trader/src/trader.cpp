@@ -232,8 +232,8 @@ protected:
                 Logger::info("[INFO] [%s:%3d]: No matched investor position detail info found.", __FUNCTION__, __LINE__);
                 return;
             }
-            Logger::info("[INFO] [%s:%3d]: Investor position detail info: instrumentID=%s, BrokerID=%s, InvestorID=%s, HedgeFlag=%s, Direction=%s, OpenDate=%s, Volume=%d, OpenPrice=%f, TradingDay=%s, ExchangeID=%s, LastSettlementPrice=%f, SettlementPrice=%f, TradeType=%s.", __FUNCTION__, __LINE__,
-                positionDetail->InstrumentID, positionDetail->BrokerID, positionDetail->InvestorID, positionDetail->HedgeFlag == THOST_FTDC_HF_Arbitrage ? "Arbitrage" : positionDetail->HedgeFlag == THOST_FTDC_HF_Arbitrage ? "Speculation" : "Hedge", positionDetail->Direction == THOST_FTDC_D_Buy ? "buy" : "sell", positionDetail->OpenDate, positionDetail->Volume, positionDetail->OpenPrice, positionDetail->TradingDay, positionDetail->ExchangeID, positionDetail->LastSettlementPrice, positionDetail->SettlementPrice, positionDetail->TradeType);
+            Logger::info("[INFO] [%s:%3d]: Investor position detail info: instrumentID=%s, BrokerID=%s, InvestorID=%s, HedgeFlag=%s, Direction=%s, OpenDate=%s, Volume=%d, OpenPrice=%f, TradingDay=%s, ExchangeID=%s, LastSettlementPrice=%f, SettlementPrice=%f.", __FUNCTION__, __LINE__,
+                positionDetail->InstrumentID, positionDetail->BrokerID, positionDetail->InvestorID, positionDetail->HedgeFlag == THOST_FTDC_HF_Arbitrage ? "Arbitrage" : positionDetail->HedgeFlag == THOST_FTDC_HF_Arbitrage ? "Speculation" : "Hedge", positionDetail->Direction == THOST_FTDC_D_Buy ? "buy" : "sell", positionDetail->OpenDate, positionDetail->Volume, positionDetail->OpenPrice, positionDetail->TradingDay, positionDetail->ExchangeID, positionDetail->LastSettlementPrice, positionDetail->SettlementPrice);
         }
      virtual void OnRspQryTradingAccount(CThostFtdcTradingAccountField *account, CThostFtdcRspInfoField *status, int requestID, bool isLast) {
         if (status != NULL && status->ErrorID != 0) {
