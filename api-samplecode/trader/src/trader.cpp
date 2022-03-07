@@ -566,8 +566,8 @@ int main() {
     // doSleep(1000);
     tradeClient->queryOrder("GC2204-CME");
     doSleep(1000);
-    // tradeClient->replaceOrder("1", 3950.0, 5);
-    // doSleep(1000);
+    tradeClient->replaceOrder("1", 1986, 2);
+    doSleep(1000);
     // tradeClient->cancelOrder("1");
     // doSleep(1000);
     tradeClient->queryTrade("GC2204-CME");
