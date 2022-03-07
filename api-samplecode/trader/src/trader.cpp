@@ -233,7 +233,7 @@ protected:
                 return;
             }
             Logger::info("[INFO] [%s:%3d]: Investor position detail info: instrumentID=%s, BrokerID=%s, InvestorID=%s, HedgeFlag=%s, Direction=%s, OpenDate=%s, Volume=%d, OpenPrice=%f, TradingDay=%s, ExchangeID=%s, LastSettlementPrice=%f, SettlementPrice=%f, TradeType=%s.", __FUNCTION__, __LINE__,
-                positionDetail->InstrumentID, positionDetail->BrokerID, positionDetail->InvestorID, positionDetail->HedgeFlag == THOST_FTDC_HF_Arbitrage ? "Arbitrage" : positionDetail->HedgeFlag == THOST_FTDC_HF_Arbitrage ? "Speculation" : "Hedge", positionDetail->Direction == THOST_FTDC_D_Buy ? "buy" : "sell", positionDetail->OpenDate, positionDetail->Volume, positionDetail->OpenPrice, positionDetail->TradingDay, positionDetail->ExchangeID, positionDetail->LastSettlementPrice, positionDetail->SettlementPrice, positionDetail->TradeType);
+                positionDetail->InstrumentID, positionDetail->BrokerID, positionDetail->InvestorID, positionDetail->HedgeFlag == THOST_FTDC_HF_Arbitrage ? "Arbitrage" : positionDetail->HedgeFlag == THOST_FTDC_HF_Arbitrage ? "Speculation" : "Hedge", positionDetail->Direction == THOST_FTDC_D_Buy ? "buy" : "sell", positionDetail->OpenDate, positionDetail->Volume, positionDetail->OpenPrice, positionDetail->TradingDay, positionDetail->ExchangeID, positionDetail->LastSettlementPrice, positionDetail->SettlementPrice, positionDetail->TradeType == THOST_FTDC_TRDT_Common ? "Common trade" : positionDetail->TradeType == THOST_FTDC_TRDT_OptionsExecution ? "Options execution trade" : positionDetail->TradeType == THOST_FTDC_TRDT_OptionsExecution ? "Options execution trade" : positionDetail->TradeType == THOST_FTDC_TRDT_EFPDerived ? "Exchange for physical derived" : "Combination derived");
         }
      virtual void OnRspQryTradingAccount(CThostFtdcTradingAccountField *account, CThostFtdcRspInfoField *status, int requestID, bool isLast) {
         if (status != NULL && status->ErrorID != 0) {
@@ -275,7 +275,7 @@ protected:
             return;
         }
         Logger::info("[INFO] [%s:%3d]: Investor Margin Rate: InstrumentID=%s, BrokerID=%s, InvestorID=%s, HedgeFlag=%s, LongMarginRatioByMoney=%f, LongMarginRatioByVolume=%f, ShortMarginRatioByMoney=%f, ShortMarginRatioByVolume=%f, IsRelative=%d, InvestorRange=%s.", __FUNCTION__, __LINE__,
-            marginRate->InstrumentID, marginRate->BrokerID, marginRate->InvestorID, marginRate->HedgeFlag == THOST_FTDC_HF_Speculation ? "Speculation" : marginRate->HedgeFlag == THOST_FTDC_HF_Arbitrage ? "Arbitrage" : "Hedge", marginRate->LongMarginRatioByMoney, marginRate->LongMarginRatioByVolume, marginRate->ShortMarginRatioByMoney, marginRate->ShortMarginRatioByVolume, marginRate->IsRelative, marginRate->InvestorRange == THOST_FTDC_IR_All ? "THOST_FTDC_IR_All" : marginRate->InvestorRange == THOST_FTDC_IR_Group ? "Investor group" : "Single investor");
+            marginRate->InstrumentID, marginRate->BrokerID, marginRate->InvestorID, marginRate->HedgeFlag == THOST_FTDC_HF_Arbitrage? "Arbitrage" : marginRate->HedgeFlag == THOST_FTDC_HF_Speculation ? "Speculation" : "Hedge", marginRate->LongMarginRatioByMoney, marginRate->LongMarginRatioByVolume, marginRate->ShortMarginRatioByMoney, marginRate->ShortMarginRatioByVolume, marginRate->IsRelative, marginRate->InvestorRange == THOST_FTDC_IR_All ? "THOST_FTDC_IR_All" : marginRate->InvestorRange == THOST_FTDC_IR_Group ? "Investor group" : "Single investor");
     }
     // Overwrite other api(s)
     // ...
@@ -605,8 +605,8 @@ int main() {
     // doSleep(1000);
     // tradeClient->cancelOrder("1");
     // doSleep(1000);
-    tradeClient->queryTrade("GC2204-CME");
-    doSleep(1000);
+    // tradeClient->queryTrade("GC2204-CME");
+    // doSleep(1000);
     tradeClient->queryInvestorPosition("GC2204-CME");
     doSleep(1000);
     tradeClient->queryTradingAccount();
