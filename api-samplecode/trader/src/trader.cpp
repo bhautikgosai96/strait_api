@@ -236,6 +236,27 @@ protected:
         Logger::info("[INFO] [%s:%3d]: Investor trading account info: BrokerID=%s, AccountID=%s, PreBalance=%f, Deposit=%f, Withdraw=%f, FrozenMargin=%f, FrozenCash=%f, CurrMargin=%f, Commission=%f, CloseProfit=%f, PositionProfit=%f, Balance=%f, Available=%f, TradingDay=%s, SettlementID=%d, Credit=%f, CurrencyID=%s.", __FUNCTION__, __LINE__,
             account->BrokerID, account->AccountID, account->PreBalance, account->Deposit, account->Withdraw, account->FrozenMargin, account->FrozenCash, account->CurrMargin, account->Commission, account->CloseProfit, account->PositionProfit, account->Balance, account->Available, account->TradingDay, account->SettlementID, account->Credit, account->CurrencyID);
     }
+    virtual void OnRspQryInstrumentMarginRate(CThostFtdcInstrumentMarginRateField  *marginRate, CThostFtdcRspInfoField *status, int requestID, bool isLast) {
+        if (status != NULL && status->ErrorID != 0) {
+            Logger::info("[WARN] [%s:%3d]: Failed to query investor Margin Rate: errorID=%d, errorMsg=%s", __FUNCTION__, __LINE__,
+                status->ErrorID, status->ErrorMsg);
+            return;
+        }
+        if (marginRate == NULL) {
+            if (status == NULL) {
+                Logger::info("[ERROR] [%s:%3d]: Invalid server response, got null pointer of investor Margin Rate.", __FUNCTION__, __LINE__);    // Should not happen
+                return;
+            }
+            if (!isLast) { 
+                Logger::info("[ERROR] [%s:%3d]: Invalid server response, got null pointer of investor Margin Rate.", __FUNCTION__, __LINE__);    // Should not happen
+                return;
+            }
+            Logger::info("[INFO] [%s:%3d]: No matched investor Margin Rate found.", __FUNCTION__, __LINE__);
+            return;
+        }
+        Logger::info("[INFO] [%s:%3d]: Investor Margin Rate: InstrumentID=%s, BrokerID=%s, InvestorID=%s, HedgeFlag=%s, LongMarginRatioByMoney=%f, LongMarginRatioByVolume=%f, ShortMarginRatioByMoney=%f, ShortMarginRatioByVolume=%f, IsRelative=%d, InvestorRange=%s.", __FUNCTION__, __LINE__,
+            marginRate->InstrumentID, marginRate->BrokerID, marginRate->InvestorID, marginRate->HedgeFlag == THOST_FTDC_HF_Speculation ? "Speculation" : marginRate->HedgeFlag == THOST_FTDC_HF_Arbitrage ? "Arbitrage" : "Hedge", marginRate->LongMarginRatioByMoney, marginRate->LongMarginRatioByVolume, marginRate->ShortMarginRatioByMoney, marginRate->ShortMarginRatioByVolume, marginRate->IsRelative, marginRate->InvestorRange == THOST_FTDC_IR_All ? "THOST_FTDC_IR_All" : marginRate->InvestorRange == THOST_FTDC_IR_Group ? "Investor group" : "Single investor");
+    }
     // Overwrite other api(s)
     // ...
 public:
@@ -417,6 +438,22 @@ public:
                 field.BrokerID, field.InvestorID);
         }
     }
+    void queryInstrumentMarginRate(const char *instrumentID) {
+        ensureLogon();
+        CThostFtdcQryInstrumentMarginRateField field;
+        memset(&field, 0, sizeof(field));
+        strcpy(field.BrokerID, BROKER_ID);
+        strcpy(field.InvestorID, USER_ID);
+        strcpy(field.InstrumentID, instrumentID);
+        field.HedgeFlag = THOST_FTDC_HF_Speculation;
+        int rtnCode = tradeApi->ReqQryInstrumentMarginRate(&field, nextRequestID());
+        if (rtnCode != 0) {
+            Logger::info("[ERROR] [%s:%3d] Request failed: code=%d.", __FUNCTION__, __LINE__, rtnCode);
+        } else {
+            Logger::info("[INFO] [%s:%3d] Requested to query instrument margin rate info: brokerID=%s, investorID=%s, instrumentID=%s.", __FUNCTION__, __LINE__,
+                field.BrokerID, field.InvestorID, field.InstrumentID);
+        }
+    }
     void ensureLogon() {
         const int MAX_ATTEMPT_TIMES = 100;
         int tryTimes = 0;
@@ -525,7 +562,7 @@ int main() {
     // doSleep(5000);
     tradeClient->queryInstrument("GC2204-CME");
     doSleep(5000);
-    tradeClient->insertOrder("GC2204-CME", true, 3900.0, 3);
+    tradeClient->insertOrder("GC2204-CME", false, 4000.0, 2);
     doSleep(1000);
     // tradeClient->queryOrder("GC2204-CME");
     // doSleep(1000);
@@ -538,6 +575,8 @@ int main() {
     tradeClient->queryInvestorPosition("GC2204-CME");
     doSleep(1000);
     tradeClient->queryTradingAccount();
+    doSleep(1000);
+    tradeClient->queryInstrumentMarginRate("GC2204-CME");
     doSleep(1000);
     // Destroy the instance and release resources
     pTraderApi->RegisterSpi(NULL);
