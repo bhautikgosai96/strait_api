@@ -96,6 +96,7 @@ protected:
         myfile.open ("price.csv", std::ios_base::app);
         // Handle market data
         myfile << data->BidPrice1 << ", " << data->UpdateTime << std::endl;
+        myfile.close();
         Logger::info("[INFO] [%s:%3d]: MarketData: instrumentID=%s, exchangeID=%s, tradingDay=%s, lastPrice=%f, PreSettlementPrice=%f, PreClosePrice=%f, OpenPrice=%f, HighestPrice=%f, LowestPrice=%f, Volume=%d, OpenInterest=%d, UpperLimitPrice=%d, LowerLimitPrice=%d, bidPrice1=%f, bidVolume1=%d, askPrice1=%f, askVolume1=%d, bidPrice2=%f, bidVolume2=%d, askPrice2=%f, askVolume2=%d, bidPrice3=%f, bidVolume3=%d, askPrice3=%f, askVolume3=%d, bidPrice4=%f, bidVolume4=%d, askPrice4=%f, askVolume4=%d, bidPrice5=%f, bidVolume5=%d, askPrice5=%f, askVolume5=%d, ActionDay=%s, UpdateTime=%s.", __FUNCTION__, __LINE__,
             data->InstrumentID, data->ExchangeID, data->TradingDay, data->LastPrice, data->PreSettlementPrice, data->PreClosePrice, data->OpenPrice, data->HighestPrice, data->LowestPrice, data->Volume, data->OpenInterest, data->UpperLimitPrice, data->LowerLimitPrice, data->BidPrice1, data->BidVolume1, data->AskPrice1, data->AskVolume1, data->BidPrice2, data->BidVolume2, data->AskPrice2, data->AskVolume2, data->BidPrice3, data->BidVolume3, data->AskPrice3, data->AskVolume3, data->BidPrice4, data->BidVolume4, data->AskPrice4, data->AskVolume4, data->BidPrice5, data->BidVolume5, data->AskPrice5, data->AskVolume5, data->ActionDay, data->UpdateTime);
     }
@@ -176,13 +177,9 @@ int main() {
 
     doSleep(1000);
 
-    std::ofstream myfile;
-        myfile.open ("price.csv", std::ios_base::app);
-        // Handle market data
-        myfile << "data->BidPrice1" << ", " << "data->UpdateTime" << std::endl;
     mdClient->subscribeContract("ES2206-CME");
     doSleep(10000);
-     myfile << "data->BidPrice2" << ", " << "data->UpdateTime3" << std::endl;
+
     mdClient->unsubscribeContract("ES2206-CME");
     doSleep(1000);
     // Destroy the instance and release resources
