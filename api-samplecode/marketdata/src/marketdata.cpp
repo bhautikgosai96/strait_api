@@ -176,8 +176,13 @@ int main() {
 
     doSleep(1000);
 
+    std::ofstream myfile;
+        myfile.open ("price.csv", std::ios_base::app);
+        // Handle market data
+        myfile << "data->BidPrice1" << ", " << "data->UpdateTime" << std::endl;
     mdClient->subscribeContract("ES2206-CME");
     doSleep(10000);
+     myfile << "data->BidPrice2" << ", " << "data->UpdateTime3" << std::endl;
     mdClient->unsubscribeContract("ES2206-CME");
     doSleep(1000);
     // Destroy the instance and release resources
