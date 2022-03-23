@@ -191,7 +191,7 @@ void printCurrTime()
 #endif
 }
 
-int main()
+void main()
 {
 #ifndef _WIN32
     // To ignore SIGPIPE
@@ -224,5 +224,5 @@ int main()
 
     // delete mdClient;
 
-    return 0;
+    //return 0;
 }
