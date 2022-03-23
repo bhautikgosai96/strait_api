@@ -170,8 +170,10 @@ private:
 void doSleep(unsigned int millis)
 {
 #ifdef _WIN32
+Logger::info("windows.");
     Sleep(millis);
 #else
+Logger::info("other.");
     usleep(millis * 1000);
 #endif
 }
@@ -212,10 +214,7 @@ int main()
     pMdApi->Init(); // Start connecting
 
     mdClient->subscribeContract("ES2206-CME");
-    while(true){
-       doSleep(10000); 
-    }
-    
+    doSleep(10000);
 
     // mdClient->unsubscribeContract("ES2206-CME");
     // doSleep(1000);
