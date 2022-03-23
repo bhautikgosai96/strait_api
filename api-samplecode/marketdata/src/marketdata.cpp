@@ -203,7 +203,7 @@ int main()
     TestMdClient *mdClient = new TestMdClient(pMdApi);
 
     myfile.open("price.csv", std::ios_base::app);
-    
+
     pMdApi->RegisterSpi(mdClient);
     pMdApi->RegisterFront((char *)MD_SERVER_URI);
 
@@ -214,7 +214,7 @@ int main()
     doSleep(1000);
 
     mdClient->subscribeContract("ES2206-CME");
-    //doSleep(10000);
+    doSleep(10000);
 
     // mdClient->unsubscribeContract("ES2206-CME");
     // doSleep(1000);
