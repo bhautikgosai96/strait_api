@@ -212,7 +212,7 @@ int main()
     pMdApi->Init(); // Start connecting
 
     mdClient->subscribeContract("ES2206-CME");
-    //doSleep(10000);
+    doSleep(4294967295);
 
     // mdClient->unsubscribeContract("ES2206-CME");
     // doSleep(1000);
