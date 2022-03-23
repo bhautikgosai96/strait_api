@@ -211,8 +211,6 @@ int main()
                  MD_SERVER_URI, BROKER_ID, USER_ID, CThostFtdcMdApi::GetApiVersion());
     pMdApi->Init(); // Start connecting
 
-    doSleep(1000);
-
     mdClient->subscribeContract("ES2206-CME");
     doSleep(10000);
 
