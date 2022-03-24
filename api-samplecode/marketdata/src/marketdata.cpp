@@ -212,15 +212,15 @@ int main()
     pMdApi->Init(); // Start connecting
 
     mdClient->subscribeContract("ES2206-CME");
-    doSleep(4294967295);
+    doSleep(10000);
 
-    // mdClient->unsubscribeContract("ES2206-CME");
-    // doSleep(1000);
-    // // Destroy the instance and release resources
-    // pMdApi->RegisterSpi(NULL);
-    // pMdApi->Release();
+    mdClient->unsubscribeContract("ES2206-CME");
+    doSleep(1000);
+    // Destroy the instance and release resources
+    pMdApi->RegisterSpi(NULL);
+    pMdApi->Release();
 
-    // delete mdClient;
+    delete mdClient;
 
     return 0;
 }
