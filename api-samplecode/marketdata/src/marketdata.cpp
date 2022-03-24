@@ -147,7 +147,19 @@ public:
             Logger::info("[INFO] [%s:%3d]: Requested to unsubscribe market data: instrumentID=%s.", __FUNCTION__, __LINE__, instrumentID);
         }
     }
-
+    void doLogout() {
+            CThostFtdcUserLogoutField field;
+            memset(&field, 0, sizeof(field));
+            strcpy(field.BrokerID, BROKER_ID);
+            strcpy(field.UserID, USER_ID);
+            int rtnCode = mdApi->ReqUserLogout(&field, nextRequestID());
+            if (rtnCode != 0) {
+                Logger::info("[ERROR] [%s:%3d] Request failed: code=%d.", __FUNCTION__, __LINE__, rtnCode);
+            } else {
+                Logger::info("[INFO] [%s:%3d]: Requested to logout: brokerID=%s, userID=%s.", __FUNCTION__, __LINE__,
+                    field.BrokerID, field.UserID);
+            }
+    }
 private:
     void doLogin()
     {
@@ -214,13 +226,14 @@ int main()
     pMdApi->Init(); // Start connecting
 
     doSleep(5000);
+    mdClient->doLogout();
     // mdClient->subscribeContract("ES2206-CME");
     // while(true){
     //     doSleep(10000);
     // }
-    doSleep(10000);
 
-    mdClient->unsubscribeContract("ES2206-CME");
+
+    // mdClient->unsubscribeContract("ES2206-CME");
     doSleep(1000);
     // Destroy the instance and release resources
     pMdApi->RegisterSpi(NULL);
