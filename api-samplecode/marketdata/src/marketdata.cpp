@@ -48,7 +48,7 @@ protected:
     virtual void OnFrontConnected()
     {
         Logger::info("[INFO] [%s:%3d]: Front connected.", __FUNCTION__, __LINE__);
-        doLogin();
+        //doLogin();
     }
     virtual void OnFrontDisconnected(int reason)
     {
@@ -226,14 +226,14 @@ int main()
     pMdApi->Init(); // Start connecting
 
     doSleep(5000);
-    mdClient->doLogout();
-    // mdClient->subscribeContract("ES2206-CME");
+    //mdClient->doLogout();
+    //mdClient->subscribeContract("ES2206-CME");
     // while(true){
     //     doSleep(10000);
     // }
+    //doSleep(10000);
 
-
-    // mdClient->unsubscribeContract("ES2206-CME");
+     mdClient->unsubscribeContract("ES2206-CME");
     doSleep(1000);
     // Destroy the instance and release resources
     pMdApi->RegisterSpi(NULL);
