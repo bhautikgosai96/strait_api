@@ -121,7 +121,7 @@ protected:
 public:
     void subscribeContract(char *instrumentID)
     {
-        char *instrumentIDs[] = {instrumentID};
+        char *instrumentIDs[] = {"ES2206-CME", "ES2203-CME", "NQ2203-CME", "NQ2206-CME"};
         int rtnCode = mdApi->SubscribeMarketData(instrumentIDs, sizeof(instrumentIDs) / sizeof(char *));
         if (rtnCode != 0)
         {
@@ -134,7 +134,7 @@ public:
     }
     void unsubscribeContract(char *instrumentID)
     {
-        char *instrumentIDs[] = {instrumentID};
+        char *instrumentIDs[] = {"ES2206-CME", "ES2203-CME", "NQ2203-CME", "NQ2206-CME"};
         int rtnCode = mdApi->UnSubscribeMarketData(instrumentIDs, sizeof(instrumentIDs) / sizeof(char *));
         if (rtnCode != 0)
         {
@@ -213,10 +213,10 @@ int main()
 
     doSleep(5000);
     mdClient->subscribeContract("ES2206-CME");
-    while(true){
-        doSleep(10000);
-    }
-    
+    // while(true){
+    //     doSleep(10000);
+    // }
+    doSleep(10000);
 
     mdClient->unsubscribeContract("ES2206-CME");
     doSleep(1000);
