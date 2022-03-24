@@ -213,7 +213,10 @@ int main()
 
     doSleep(5000);
     mdClient->subscribeContract("ES2206-CME");
-    doSleep(864000000);
+    while(true){
+        doSleep(10000);
+    }
+    
 
     mdClient->unsubscribeContract("ES2206-CME");
     doSleep(1000);
