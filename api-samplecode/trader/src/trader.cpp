@@ -450,7 +450,7 @@ public:
         //strcpy(field.OrderRef, orderRef);
 
         // Or use ExchangeID+OrderSysID to locate the order:
-        //strcpy(field.ExchangeID, "LME");
+        strcpy(field.ExchangeID, "CME");
         strcpy(field.OrderSysID, "MT13z1Tt");
 
         field.ActionFlag = THOST_FTDC_AF_Modify;
@@ -476,11 +476,11 @@ public:
         // Use FrontID+SessionID+OrderRef to locate the order:
         field.FrontID = frontID;        // FrontID can be got from CThostFtdcOrderField.FrontID
         field.SessionID = sessionID;    // SessionID can be got from CThostFtdcOrderField.SessionID
-        strcpy(field.OrderRef, orderRef);
+        //strcpy(field.OrderRef, orderRef);
 
         // Or use ExchangeID+OrderSysID to locate the order:
-        //strcpy(field.ExchangeID, "LME");
-        //strcpy(field.OrderSysID, "AAAAAAA");
+        strcpy(field.ExchangeID, "CME");
+        strcpy(field.OrderSysID, "MT13uyRa");
 
         field.ActionFlag = THOST_FTDC_AF_Delete;    // Delete
 
@@ -719,9 +719,9 @@ int main() {
     doSleep(1000);
     tradeClient->queryOrder("ES2206-CME");
     doSleep(1000);
-    tradeClient->replaceOrder("1", 4504, 2);
+    tradeClient->replaceOrder("1", 4504, 3);
     // doSleep(1000);
-    // tradeClient->cancelOrder("1");
+    tradeClient->cancelOrder("1");
     doSleep(1000);
     tradeClient->queryTrade("ES2206-CME");
     doSleep(1000);
