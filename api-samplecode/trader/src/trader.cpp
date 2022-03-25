@@ -722,9 +722,9 @@ int main() {
     // tradeClient->replaceOrder("1", 1986, 2);
     // doSleep(1000);
     // tradeClient->cancelOrder("1");
-    // doSleep(1000);
+    doSleep(1000);
     tradeClient->queryTrade("ES2206-CME");
-    // doSleep(1000);
+    doSleep(1000);
     tradeClient->queryInvestorPosition("ES2206-CME");
     doSleep(1000);
     tradeClient->queryTradingAccount();
