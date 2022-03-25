@@ -228,10 +228,10 @@ int main()
     doSleep(5000);
     //mdClient->doLogout();
     mdClient->subscribeContract("MES2206-CME");
-    // while(true){
-    //     doSleep(10000);
-    // }
-    doSleep(5000);
+    while(true){
+        doSleep(10000);
+    }
+    //doSleep(5000);
      mdClient->unsubscribeContract("MES2206-CME");
     doSleep(1000);
     // Destroy the instance and release resources
