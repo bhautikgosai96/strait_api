@@ -121,7 +121,7 @@ protected:
 public:
     void subscribeContract(char *instrumentID)
     {
-        char *instrumentIDs[] = {"ES2206-CME", "ES2203-CME", "NQ2203-CME", "NQ2206-CME"};
+        char *instrumentIDs[] = {"MES2206-CME", "MS2209-CME", "MNQ2209-CME", "MNQ2206-CME"};
         //char *instrumentIDs[] = {instrumentID};
         int rtnCode = mdApi->SubscribeMarketData(instrumentIDs, sizeof(instrumentIDs) / sizeof(char *));
         if (rtnCode != 0)
@@ -135,7 +135,7 @@ public:
     }
     void unsubscribeContract(char *instrumentID)
     {
-        char *instrumentIDs[] = {"ES2206-CME", "ES2203-CME", "NQ2203-CME", "NQ2206-CME"};
+        char *instrumentIDs[] = {"MES2206-CME", "MS2209-CME", "MNQ2209-CME", "MNQ2206-CME"};
         //char *instrumentIDs[] = {instrumentID};
         int rtnCode = mdApi->UnSubscribeMarketData(instrumentIDs, sizeof(instrumentIDs) / sizeof(char *));
         if (rtnCode != 0)
@@ -227,12 +227,12 @@ int main()
 
     doSleep(5000);
     //mdClient->doLogout();
-    mdClient->subscribeContract("ES2206-CME");
-    while(true){
-        doSleep(10000);
-    }
-    //doSleep(4294967295);
-     mdClient->unsubscribeContract("ES2206-CME");
+    mdClient->subscribeContract("MES2206-CME");
+    // while(true){
+    //     doSleep(10000);
+    // }
+    doSleep(5000);
+     mdClient->unsubscribeContract("MES2206-CME");
     doSleep(1000);
     // Destroy the instance and release resources
     pMdApi->RegisterSpi(NULL);
