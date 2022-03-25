@@ -597,7 +597,7 @@ int main() {
     // doSleep(5000);
     //tradeClient->queryInstrument("GC2204-CME");
     //doSleep(5000);
-    //tradeClient->insertOrder("ES2206-CME", false, 4500.0, 2);
+    tradeClient->insertOrder("ES2206-CME", true, 4500.0, 2);
     doSleep(1000);
     tradeClient->queryOrder("ES2206-CME");
     // doSleep(1000);
