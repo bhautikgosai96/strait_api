@@ -595,11 +595,11 @@ int main() {
     // doSleep(5000);
     // tradeClient->queryInstrument("GC2203-CME");
     // doSleep(5000);
-    tradeClient->queryInstrument("GC2204-CME");
-    doSleep(5000);
+    //tradeClient->queryInstrument("GC2204-CME");
+    //doSleep(5000);
     // tradeClient->insertOrder("GC2204-CME", false, 4000.0, 2);
     // doSleep(1000);
-    // tradeClient->queryOrder("GC2204-CME");
+    tradeClient->queryOrder("ES2206-CME");
     // doSleep(1000);
     // tradeClient->replaceOrder("1", 1986, 2);
     // doSleep(1000);
@@ -607,13 +607,13 @@ int main() {
     // doSleep(1000);
     // tradeClient->queryTrade("GC2204-CME");
     // doSleep(1000);
-    tradeClient->queryInvestorPosition("GC2204-CME");
-    doSleep(1000);
-    tradeClient->queryTradingAccount();
-    doSleep(1000);
-    tradeClient->queryInstrumentMarginRate("GC2204-CME");
-    doSleep(1000);
-    tradeClient->queryInvestorPositionDetail("GC2204-CME");
+    // tradeClient->queryInvestorPosition("GC2204-CME");
+    // doSleep(1000);
+    // tradeClient->queryTradingAccount();
+    // doSleep(1000);
+    // tradeClient->queryInstrumentMarginRate("GC2204-CME");
+    // doSleep(1000);
+    // tradeClient->queryInvestorPositionDetail("GC2204-CME");
     doSleep(1000);
     // Destroy the instance and release resources
     pTraderApi->RegisterSpi(NULL);
