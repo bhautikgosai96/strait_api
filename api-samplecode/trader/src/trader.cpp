@@ -169,8 +169,25 @@ protected:
             Logger::info("[INFO] [%s:%3d]: No matched order info found.", __FUNCTION__, __LINE__);
             return;
         }
-        Logger::info("[INFO] [%s:%3d]: Order info: orderRef=%s, orderLocalID=%s, sessionID=%d, frontID=%d, instrumentID=%s, direction=%s, volumeTotalOriginal=%d, limitPrice=%f, OrderStatus=%c.", __FUNCTION__, __LINE__,
-            order->OrderRef, order->OrderLocalID, order->SessionID, order->FrontID, order->InstrumentID, order->Direction == THOST_FTDC_D_Buy ? "buy" : "sell", order->VolumeTotalOriginal, order->LimitPrice, order->OrderStatus);
+        char *OrderSubmitStatus;
+        if(order->OrderSubmitStatus == THOST_FTDC_OSS_InsertSubmitted) {
+            OrderSubmitStatus = "Insert request submitted";
+        } else if (order->OrderSubmitStatus == THOST_FTDC_OSS_CancelSubmitted) {
+            OrderSubmitStatus = "Cancel request submitted.";
+        } else if (order->OrderSubmitStatus == THOST_FTDC_OSS_ModifySubmitted) {
+            OrderSubmitStatus = "Modify request submitted";
+        } else if (order->OrderSubmitStatus == THOST_FTDC_OSS_Accepted) {
+            OrderSubmitStatus = "Order accepted.";
+        } else if (order->OrderSubmitStatus == THOST_FTDC_OSS_InsertRejected) {
+            OrderSubmitStatus = "Order insert request be rejected";
+        } else if (order->OrderSubmitStatus == THOST_FTDC_OSS_CancelRejected) {
+            OrderSubmitStatus = "Order cancel request be rejected";
+        } else if (order->OrderSubmitStatus == THOST_FTDC_OSS_ModifyRejected) {
+            OrderSubmitStatus = "Order modify request be rejected";
+        }
+        
+        Logger::info("[INFO] [%s:%3d]: Order info: BrokerID=%s, InvestorID=%s, UserID=%s, orderRef=%s, orderLocalID=%s, sessionID=%d, frontID=%d, instrumentID=%s, direction=%s, volumeTotalOriginal=%d, limitPrice=%f, OrderStatus=%c, OrderPriceType=%s, CombOffsetFlag=%s, CombHedgeFlag=%s, TimeCondition=%s, GTDDate=%s, MinVolume=%d, StopPrice=%f, BusinessUnit=%s, RequestID=%d, OrderLocalID=%s, ExchangeID=%s, ExchangeInstID=%s, OrderSubmitStatus=%s .", __FUNCTION__, __LINE__,
+            order->BrokerID, order->InvestorID, order->UserID, order->OrderRef, order->OrderLocalID, order->SessionID, order->FrontID, order->InstrumentID, order->Direction == THOST_FTDC_D_Buy ? "buy" : "sell", order->VolumeTotalOriginal, order->LimitPrice, order->OrderStatus, order->OrderPriceType == THOST_FTDC_OPT_AnyPrice ? "Any price" : "Limit price", order->CombOffsetFlag, order->CombHedgeFlag, order->TimeCondition == THOST_FTDC_TC_IOC ? "Immediate-Or-Cancel" : (order->TimeCondition == THOST_FTDC_TC_GFD ? "Good-For-Day" : (order->TimeCondition == THOST_FTDC_TC_GTD ? "Good-Till-Date" : "Good-Till-Cancelled")), order->GTDDate, order->MinVolume, order->StopPrice, order->BusinessUnit, order->RequestID, order->OrderLocalID, order->ExchangeID, order->ExchangeInstID, OrderSubmitStatus );
     }
     virtual void OnRspQryInstrument(CThostFtdcInstrumentField *inst, CThostFtdcRspInfoField *status, int requestID, bool isLast) {
         if (status != NULL && status->ErrorID != 0) {
@@ -597,7 +614,7 @@ int main() {
     // doSleep(5000);
     //tradeClient->queryInstrument("GC2204-CME");
     //doSleep(5000);
-    tradeClient->insertOrder("ES2206-CME", true, 4500.0, 2);
+    //tradeClient->insertOrder("ES2206-CME", true, 4500.0, 2);
     doSleep(1000);
     tradeClient->queryOrder("ES2206-CME");
     // doSleep(1000);
