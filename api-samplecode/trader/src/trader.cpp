@@ -716,10 +716,10 @@ int main() {
     //tradeClient->queryInstrument("GC2204-CME");
     //doSleep(5000);
     Logger::info("---------------------------------------------------------------------------------------------------------------");
-    tradeClient->insertOrder("MNQ2206-CME", true, 4500.0, 2);
+    tradeClient->insertOrder("NQ2206-CME", true, 14710.0, 12);
     doSleep(1000);
     Logger::info("---------------------------------------------------------------------------------------------------------------");
-    tradeClient->queryOrder("ES2206-CME");
+    tradeClient->queryOrder("NQ2206-CME");
     Logger::info("---------------------------------------------------------------------------------------------------------------");
     // doSleep(1000);
     // tradeClient->replaceOrder("1", 4504, 3);
