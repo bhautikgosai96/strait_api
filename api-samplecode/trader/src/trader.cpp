@@ -179,7 +179,7 @@ protected:
         } else if (order->OrderType == THOST_FTDC_ORDT_Swap	) {
             OrderType = "Swap order";
         }  
-        Logger::info("Order Status -------- %s", order->OrderStatus);
+        Logger::info("Order Status -------- %c", order->OrderStatus);
             // Logger::info("[INFO] [%s:%3d]: Order status: orderRef=%s, orderLocalID=%s, sessionID=%d, frontID=%d, instrumentID=%s, direction=%s, volumeTotalOriginal=%d, limitPrice=%f, volumeTraded=%d, orderStatus=%c.", __FUNCTION__, __LINE__,
             //     order->OrderRef, order->OrderLocalID, order->SessionID, order->FrontID, order->InstrumentID, order->Direction == THOST_FTDC_D_Buy ? "buy" : "sell", order->VolumeTotalOriginal, order->LimitPrice, order->VolumeTraded, order->OrderStatus);
             Logger::info("[INFO] [%s:%3d]: Order info: BrokerID=%s, InvestorID=%s, UserID=%s, orderRef=%s, orderLocalID=%s, sessionID=%d, frontID=%d, instrumentID=%s, direction=%s, volumeTotalOriginal=%d, limitPrice=%f, OrderStatus=%c, OrderPriceType=%s, CombOffsetFlag=%s, CombHedgeFlag=%s, TimeCondition=%s, GTDDate=%s, MinVolume=%d, StopPrice=%f, BusinessUnit=%s, RequestID=%d, OrderLocalID=%s, ExchangeID=%s, ExchangeInstID=%s, OrderSubmitStatus=%s, TradingDay=%s, OrderSysID=%s, OrderSource=%s, OrderStatus=%s, OrderType=%s, VolumeTraded=%d, VolumeTotal=%d, InsertDate=%s, insertTime=%s, UpdateTime=%s, FrontID=%d, SessionID=%d, StatusMsg=%s.", __FUNCTION__, __LINE__,
