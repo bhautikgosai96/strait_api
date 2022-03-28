@@ -581,10 +581,10 @@ public:
         strcpy(field.InvestorID, INVESTOR_ID);
         strcpy(field.InstrumentID, instrumentID);
         //strcpy(field.OrderRef, "1234567");
-        strcpy(field.ExchangeID, "");
+        //strcpy(field.ExchangeID, "");
         strcpy(field.OrderSysID, "MT1N6LD8");
-        strcpy(field.InsertTimeStart, "");    // The Format of TradeTimeStart: HH:mm:ss, e.g: 09:30:00
-        strcpy(field.InsertTimeEnd, "");      // The Format of TradeTimeEnd  : HH:mm:ss, e.g: 15:00:00
+        // strcpy(field.InsertTimeStart, "");    // The Format of TradeTimeStart: HH:mm:ss, e.g: 09:30:00
+        // strcpy(field.InsertTimeEnd, "");      // The Format of TradeTimeEnd  : HH:mm:ss, e.g: 15:00:00
         int rtnCode = tradeApi->ReqQryOrder(&field, nextRequestID());
         if (rtnCode != 0) {
             Logger::info("[ERROR] [%s:%3d]: Request failed: code=%d.", __FUNCTION__, __LINE__, rtnCode);
