@@ -288,7 +288,7 @@ protected:
             OrderType = "Swap order";
         }  
         Logger::info("[INFO] [%s:%3d]: Order info: BrokerID=%s, InvestorID=%s, UserID=%s, orderRef=%s, orderLocalID=%s, sessionID=%d, frontID=%d, instrumentID=%s, direction=%s, volumeTotalOriginal=%d, limitPrice=%f, OrderStatus=%c, OrderPriceType=%s, CombOffsetFlag=%s, CombHedgeFlag=%s, TimeCondition=%s, GTDDate=%s, MinVolume=%d, StopPrice=%f, BusinessUnit=%s, RequestID=%d, OrderLocalID=%s, ExchangeID=%s, ExchangeInstID=%s, OrderSubmitStatus=%s, TradingDay=%s, OrderSysID=%s, OrderSource=%s, OrderStatus=%s, OrderType=%s, VolumeTraded=%d, VolumeTotal=%d, InsertDate=%s, insertTime=%s, UpdateTime=%s, FrontID=%d, SessionID=%d, StatusMsg=%s.", __FUNCTION__, __LINE__,
-            order->BrokerID, order->InvestorID, order->UserID, order->OrderRef, order->OrderLocalID, order->SessionID, order->FrontID, order->InstrumentID, order->Direction == THOST_FTDC_D_Buy ? "buy" : "sell", order->VolumeTotalOriginal, order->LimitPrice, order->OrderStatus, order->OrderPriceType == THOST_FTDC_OPT_AnyPrice ? "Any price" : "Limit price", order->CombOffsetFlag, order->CombHedgeFlag, order->TimeCondition == THOST_FTDC_TC_IOC ? "Immediate-Or-Cancel" : (order->TimeCondition == THOST_FTDC_TC_GFD ? "Good-For-Day" : (order->TimeCondition == THOST_FTDC_TC_GTD ? "Good-Till-Date" : "Good-Till-Cancelled")), order->GTDDate, order->MinVolume, order->StopPrice, order->BusinessUnit, order->RequestID, order->OrderLocalID, order->ExchangeID, order->ExchangeInstID, OrderSubmitStatus, order->TradingDay, order->OrderSysID, OrderSource, OrderStatus, OrderType, order->VolumeTraded, order->VolumeTotal, order->InsertDate, order->InsertTime, order->UpdateTime, order->FrontID, order->SessionID, order->StatusMsg );
+            order->BrokerID, order->InvestorID, order->UserID, order->OrderRef, order->OrderLocalID, order->SessionID, order->FrontID, order->InstrumentID, order->Direction == THOST_FTDC_D_Buy ? "buy" : "sell", order->VolumeTotalOriginal, order->LimitPrice, OrderStatus, order->OrderPriceType == THOST_FTDC_OPT_AnyPrice ? "Any price" : "Limit price", order->CombOffsetFlag, order->CombHedgeFlag, order->TimeCondition == THOST_FTDC_TC_IOC ? "Immediate-Or-Cancel" : (order->TimeCondition == THOST_FTDC_TC_GFD ? "Good-For-Day" : (order->TimeCondition == THOST_FTDC_TC_GTD ? "Good-Till-Date" : "Good-Till-Cancelled")), order->GTDDate, order->MinVolume, order->StopPrice, order->BusinessUnit, order->RequestID, order->OrderLocalID, order->ExchangeID, order->ExchangeInstID, OrderSubmitStatus, order->TradingDay, order->OrderSysID, OrderSource, OrderStatus, OrderType, order->VolumeTraded, order->VolumeTotal, order->InsertDate, order->InsertTime, order->UpdateTime, order->FrontID, order->SessionID, order->StatusMsg );
     }
     virtual void OnRspQryInstrument(CThostFtdcInstrumentField *inst, CThostFtdcRspInfoField *status, int requestID, bool isLast) {
         if (status != NULL && status->ErrorID != 0) {
@@ -716,7 +716,7 @@ int main() {
     //tradeClient->queryInstrument("GC2204-CME");
     //doSleep(5000);
     Logger::info("---------------------------------------------------------------------------------------------------------------");
-    tradeClient->insertOrder("NQ2209-CME", true, 14710.0, 10);
+    //tradeClient->insertOrder("NQ2209-CME", true, 14710.0, 10);
     doSleep(1000);
     Logger::info("---------------------------------------------------------------------------------------------------------------");
     tradeClient->queryOrder("NQ2209-CME");
