@@ -412,7 +412,7 @@ public:
         field.Direction = isBuy ? THOST_FTDC_D_Buy : THOST_FTDC_D_Sell;  // Direction
         field.CombOffsetFlag[0] = THOST_FTDC_OF_Open;
         field.CombHedgeFlag[0] = THOST_FTDC_HF_Speculation;
-        //field.CombHedgeFlag[1] = '9';  // Enable this line to create market maker order
+        field.CombHedgeFlag[1] = '9';  // Enable this line to create market maker order
         //field.CombHedgeFlag[2] = '2';  // Enable this line to set T+1 session flag for non market maker order(currently for HKEX only)
         field.LimitPrice = price;            // Price
         field.VolumeTotalOriginal = volume;  // Volume
@@ -715,23 +715,26 @@ int main() {
     // doSleep(5000);
     //tradeClient->queryInstrument("GC2204-CME");
     //doSleep(5000);
-    //tradeClient->insertOrder("ES2206-CME", true, 4500.0, 2);
+    Logger::info("---------------------------------------------------------------------------------------------------------------");
+    tradeClient->insertOrder("MNQ2206-CME", true, 4500.0, 2);
     doSleep(1000);
+    Logger::info("---------------------------------------------------------------------------------------------------------------");
     tradeClient->queryOrder("ES2206-CME");
-    doSleep(1000);
-    tradeClient->replaceOrder("1", 4504, 3);
+    Logger::info("---------------------------------------------------------------------------------------------------------------");
     // doSleep(1000);
-    tradeClient->cancelOrder("1");
-    doSleep(1000);
-    tradeClient->queryTrade("ES2206-CME");
-    doSleep(1000);
-    tradeClient->queryInvestorPosition("ES2206-CME");
-    doSleep(1000);
-    tradeClient->queryTradingAccount();
-    doSleep(1000);
-    tradeClient->queryInstrumentMarginRate("ES2206-CME");
-    doSleep(1000);
-    tradeClient->queryInvestorPositionDetail("ES2206-CME");
+    // tradeClient->replaceOrder("1", 4504, 3);
+    // // doSleep(1000);
+    // tradeClient->cancelOrder("1");
+    // doSleep(1000);
+    // tradeClient->queryTrade("ES2206-CME");
+    // doSleep(1000);
+    // tradeClient->queryInvestorPosition("ES2206-CME");
+    // doSleep(1000);
+    // tradeClient->queryTradingAccount();
+    // doSleep(1000);
+    // tradeClient->queryInstrumentMarginRate("ES2206-CME");
+    // doSleep(1000);
+    // tradeClient->queryInvestorPositionDetail("ES2206-CME");
     doSleep(1000);
     // Destroy the instance and release resources
     pTraderApi->RegisterSpi(NULL);
