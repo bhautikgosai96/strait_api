@@ -582,7 +582,7 @@ public:
         strcpy(field.InstrumentID, instrumentID);
         //strcpy(field.OrderRef, "1234567");
         strcpy(field.ExchangeID, "");
-        strcpy(field.OrderSysID, "");
+        strcpy(field.OrderSysID, "MT1N6LD8");
         strcpy(field.InsertTimeStart, "");    // The Format of TradeTimeStart: HH:mm:ss, e.g: 09:30:00
         strcpy(field.InsertTimeEnd, "");      // The Format of TradeTimeEnd  : HH:mm:ss, e.g: 15:00:00
         int rtnCode = tradeApi->ReqQryOrder(&field, nextRequestID());
@@ -779,8 +779,8 @@ int main() {
     //tradeClient->queryInstrument("GC2204-CME");
     //doSleep(5000);
     Logger::info("---------------------------------------------------------------------------------------------------------------");
-    tradeClient->insertOrder("NQ2209-CME", true, 14710.0, 9, "1234567");
-    doSleep(1000);
+    // tradeClient->insertOrder("NQ2209-CME", true, 14710.0, 9, "1234567");
+    // doSleep(1000);
     Logger::info("---------------------------------------------------------------------------------------------------------------");
     tradeClient->queryOrder("NQ2209-CME");
     Logger::info("---------------------------------------------------------------------------------------------------------------");
