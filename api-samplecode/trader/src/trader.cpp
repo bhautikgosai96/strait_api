@@ -408,7 +408,7 @@ public:
         strcpy(field.UserID, USER_ID);
         strcpy(field.InstrumentID, instrumentID);
         sprintf(field.OrderRef, "%d", nextOrderRef());
-        field.OrderPriceType = THOST_FTDC_OPT_LimitPrice;
+        field.OrderPriceType = THOST_FTDC_OPT_AnyPrice;
         field.Direction = isBuy ? THOST_FTDC_D_Buy : THOST_FTDC_D_Sell;  // Direction
         field.CombOffsetFlag[0] = THOST_FTDC_OF_Open;
         field.CombHedgeFlag[0] = THOST_FTDC_HF_Speculation;
@@ -451,7 +451,7 @@ public:
 
         // Or use ExchangeID+OrderSysID to locate the order:
         strcpy(field.ExchangeID, "CME");
-        strcpy(field.OrderSysID, "MT13z1Tt");
+        strcpy(field.OrderSysID, "MT1LHo5G");
 
         field.ActionFlag = THOST_FTDC_AF_Modify;
         field.LimitPrice = price;       // Updated price
@@ -716,14 +716,15 @@ int main() {
     //tradeClient->queryInstrument("GC2204-CME");
     //doSleep(5000);
     Logger::info("---------------------------------------------------------------------------------------------------------------");
-    tradeClient->insertOrder("NQ2206-CME", true, 14710.0, 12);
+    tradeClient->insertOrder("NQ2209-CME", true, 14710.0, 10);
     doSleep(1000);
     Logger::info("---------------------------------------------------------------------------------------------------------------");
-    tradeClient->queryOrder("NQ2206-CME");
+    tradeClient->queryOrder("NQ2209-CME");
     Logger::info("---------------------------------------------------------------------------------------------------------------");
     // doSleep(1000);
-    // tradeClient->replaceOrder("1", 4504, 3);
-    // // doSleep(1000);
+    //tradeClient->replaceOrder("1", 4504, 3);
+    Logger::info("---------------------------------------------------------------------------------------------------------------");
+    //doSleep(1000);
     // tradeClient->cancelOrder("1");
     // doSleep(1000);
     // tradeClient->queryTrade("ES2206-CME");
