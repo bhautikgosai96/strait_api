@@ -120,8 +120,69 @@ protected:
     }
     virtual void OnRtnOrder(CThostFtdcOrderField *order) {
         if (order != NULL) {
-            Logger::info("[INFO] [%s:%3d]: Order status: orderRef=%s, orderLocalID=%s, sessionID=%d, frontID=%d, instrumentID=%s, direction=%s, volumeTotalOriginal=%d, limitPrice=%f, volumeTraded=%d, orderStatus=%c.", __FUNCTION__, __LINE__,
-                order->OrderRef, order->OrderLocalID, order->SessionID, order->FrontID, order->InstrumentID, order->Direction == THOST_FTDC_D_Buy ? "buy" : "sell", order->VolumeTotalOriginal, order->LimitPrice, order->VolumeTraded, order->OrderStatus);
+            char *OrderSubmitStatus;
+        if(order->OrderSubmitStatus == THOST_FTDC_OSS_InsertSubmitted) {
+            OrderSubmitStatus = "Insert request submitted";
+        } else if (order->OrderSubmitStatus == THOST_FTDC_OSS_CancelSubmitted) {
+            OrderSubmitStatus = "Cancel request submitted.";
+        } else if (order->OrderSubmitStatus == THOST_FTDC_OSS_ModifySubmitted) {
+            OrderSubmitStatus = "Modify request submitted";
+        } else if (order->OrderSubmitStatus == THOST_FTDC_OSS_Accepted) {
+            OrderSubmitStatus = "Order accepted.";
+        } else if (order->OrderSubmitStatus == THOST_FTDC_OSS_InsertRejected) {
+            OrderSubmitStatus = "Order insert request be rejected";
+        } else if (order->OrderSubmitStatus == THOST_FTDC_OSS_CancelRejected) {
+            OrderSubmitStatus = "Order cancel request be rejected";
+        } else if (order->OrderSubmitStatus == THOST_FTDC_OSS_ModifyRejected) {
+            OrderSubmitStatus = "Order modify request be rejected";
+        }
+        
+        char *OrderSource;
+        if(order->OrderSource == THOST_FTDC_OSRC_Participant) {
+            OrderSource = "From participant";
+        } else {
+            OrderSource = "From administrator";
+        }
+
+        char *OrderStatus;
+        if(order->OrderStatus == THOST_FTDC_OST_AllTraded) {
+            OrderStatus = "All traded";
+        } else if (order->OrderStatus == THOST_FTDC_OST_PartTradedQueueing) {
+            OrderStatus = "Partial trade and still queueing";
+        } else if (order->OrderStatus == THOST_FTDC_OST_PartTradedNotQueueing) {
+            OrderStatus = "Partial trade and not in the queue";
+        } else if (order->OrderStatus == THOST_FTDC_OST_NoTradeQueueing) {
+            OrderStatus = "No trade and still queueing";
+        } else if (order->OrderStatus == THOST_FTDC_OST_NoTradeNotQueueing	) {
+            OrderStatus = "No trade and not in the queue";
+        } else if (order->OrderStatus == THOST_FTDC_OST_Canceled) {
+            OrderStatus = "Order canceled";
+        } else if (order->OrderStatus == THOST_FTDC_OST_Unknown) {
+            OrderStatus = "Unknown";
+        } else if (order->OrderStatus == THOST_FTDC_OST_NotTouched) {
+            OrderStatus = "Not touched";
+        } else if (order->OrderStatus == THOST_FTDC_OST_Touched) {
+            OrderStatus = "Touched";
+        }
+
+        char *OrderType;
+        if(order->OrderType == THOST_FTDC_ORDT_Normal) {
+            OrderType = "Normal";
+        } else if (order->OrderType == THOST_FTDC_ORDT_DeriveFromQuote) {
+            OrderType = "Derive from quote";
+        } else if (order->OrderType == THOST_FTDC_ORDT_DeriveFromCombination) {
+            OrderType = "Derive from combination";
+        } else if (order->OrderType == THOST_FTDC_ORDT_Combination) {
+            OrderType = "Combination order";
+        } else if (order->OrderType == THOST_FTDC_ORDT_ConditionalOrder	) {
+            OrderType = "Conditional order";
+        } else if (order->OrderType == THOST_FTDC_ORDT_Swap	) {
+            OrderType = "Swap order";
+        }  
+            // Logger::info("[INFO] [%s:%3d]: Order status: orderRef=%s, orderLocalID=%s, sessionID=%d, frontID=%d, instrumentID=%s, direction=%s, volumeTotalOriginal=%d, limitPrice=%f, volumeTraded=%d, orderStatus=%c.", __FUNCTION__, __LINE__,
+            //     order->OrderRef, order->OrderLocalID, order->SessionID, order->FrontID, order->InstrumentID, order->Direction == THOST_FTDC_D_Buy ? "buy" : "sell", order->VolumeTotalOriginal, order->LimitPrice, order->VolumeTraded, order->OrderStatus);
+            Logger::info("[INFO] [%s:%3d]: Order info: BrokerID=%s, InvestorID=%s, UserID=%s, orderRef=%s, orderLocalID=%s, sessionID=%d, frontID=%d, instrumentID=%s, direction=%s, volumeTotalOriginal=%d, limitPrice=%f, OrderStatus=%c, OrderPriceType=%s, CombOffsetFlag=%s, CombHedgeFlag=%s, TimeCondition=%s, GTDDate=%s, MinVolume=%d, StopPrice=%f, BusinessUnit=%s, RequestID=%d, OrderLocalID=%s, ExchangeID=%s, ExchangeInstID=%s, OrderSubmitStatus=%s, TradingDay=%s, OrderSysID=%s, OrderSource=%s, OrderStatus=%s, OrderType=%s, VolumeTraded=%d, VolumeTotal=%d, InsertDate=%s, insertTime=%s, UpdateTime=%s, FrontID=%d, SessionID=%d, StatusMsg=%s.", __FUNCTION__, __LINE__,
+            order->BrokerID, order->InvestorID, order->UserID, order->OrderRef, order->OrderLocalID, order->SessionID, order->FrontID, order->InstrumentID, order->Direction == THOST_FTDC_D_Buy ? "buy" : "sell", order->VolumeTotalOriginal, order->LimitPrice, OrderStatus, order->OrderPriceType == THOST_FTDC_OPT_AnyPrice ? "Any price" : "Limit price", order->CombOffsetFlag, order->CombHedgeFlag, order->TimeCondition == THOST_FTDC_TC_IOC ? "Immediate-Or-Cancel" : (order->TimeCondition == THOST_FTDC_TC_GFD ? "Good-For-Day" : (order->TimeCondition == THOST_FTDC_TC_GTD ? "Good-Till-Date" : "Good-Till-Cancelled")), order->GTDDate, order->MinVolume, order->StopPrice, order->BusinessUnit, order->RequestID, order->OrderLocalID, order->ExchangeID, order->ExchangeInstID, OrderSubmitStatus, order->TradingDay, order->OrderSysID, OrderSource, OrderStatus, OrderType, order->VolumeTraded, order->VolumeTotal, order->InsertDate, order->InsertTime, order->UpdateTime, order->FrontID, order->SessionID, order->StatusMsg );
         }
     }
     virtual void OnRtnTrade(CThostFtdcTradeField *trade) {
@@ -398,7 +459,7 @@ protected:
     // Overwrite other api(s)
     // ...
 public:
-    void insertOrder(const char *instrumentID, bool isBuy, double price, int volume) {
+    void insertOrder(const char *instrumentID, bool isBuy, double price, int volume, const char *orderRef) {
         ensureLogon();
         const int requestID = nextRequestID();
         CThostFtdcInputOrderField field;
@@ -407,7 +468,8 @@ public:
         strcpy(field.InvestorID, INVESTOR_ID);
         strcpy(field.UserID, USER_ID);
         strcpy(field.InstrumentID, instrumentID);
-        sprintf(field.OrderRef, "%d", nextOrderRef());
+        //sprintf(field.OrderRef, "%d", nextOrderRef());
+        sprintf(field.OrderRef, orderRef);
         field.OrderPriceType = THOST_FTDC_OPT_AnyPrice;
         field.Direction = isBuy ? THOST_FTDC_D_Buy : THOST_FTDC_D_Sell;  // Direction
         field.CombOffsetFlag[0] = THOST_FTDC_OF_Open;
@@ -518,6 +580,7 @@ public:
         strcpy(field.BrokerID, BROKER_ID);
         strcpy(field.InvestorID, INVESTOR_ID);
         strcpy(field.InstrumentID, instrumentID);
+        //strcpy(field.OrderRef, "1234567");
         strcpy(field.ExchangeID, "");
         strcpy(field.OrderSysID, "");
         strcpy(field.InsertTimeStart, "");    // The Format of TradeTimeStart: HH:mm:ss, e.g: 09:30:00
@@ -716,7 +779,7 @@ int main() {
     //tradeClient->queryInstrument("GC2204-CME");
     //doSleep(5000);
     Logger::info("---------------------------------------------------------------------------------------------------------------");
-    //tradeClient->insertOrder("NQ2209-CME", true, 14710.0, 10);
+    tradeClient->insertOrder("NQ2209-CME", true, 14710.0, 9, "1234567");
     doSleep(1000);
     Logger::info("---------------------------------------------------------------------------------------------------------------");
     tradeClient->queryOrder("NQ2209-CME");
