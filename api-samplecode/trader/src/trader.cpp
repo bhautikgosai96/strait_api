@@ -763,15 +763,16 @@ int main() {
     pTraderApi->RegisterSpi(tradeClient);
     pTraderApi->RegisterFront((char *)TRADE_SERVER_URI);
 
-    pTraderApi->SubscribePrivateTopic(THOST_TERT_RESTART);
-    pTraderApi->SubscribePublicTopic(THOST_TERT_RESTART);
+    // pTraderApi->SubscribePrivateTopic(THOST_TERT_RESTART);
+    // pTraderApi->SubscribePublicTopic(THOST_TERT_RESTART);
 
     Logger::info("[INFO] [%s:%3d]: Initial client: serverUri=%s, brokerID=%s, userID=%s, version=%s.", __FUNCTION__, __LINE__,
         TRADE_SERVER_URI, BROKER_ID, USER_ID, CThostFtdcTraderApi::GetApiVersion());
     
+    doSleep(5000);
     pTraderApi->Init();  // Start connecting
 
-    doSleep(1000);
+    doSleep(5000);
     // tradeClient->queryInstrument("GC2202-CME");
     // doSleep(5000);
     // tradeClient->queryInstrument("GC2203-CME");
@@ -799,7 +800,7 @@ int main() {
     // tradeClient->queryInstrumentMarginRate("ES2206-CME");
     // doSleep(1000);
     // tradeClient->queryInvestorPositionDetail("ES2206-CME");
-    doSleep(1000);
+    doSleep(5000);
     // Destroy the instance and release resources
     pTraderApi->RegisterSpi(NULL);
     pTraderApi->Release();
