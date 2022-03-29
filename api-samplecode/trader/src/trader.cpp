@@ -770,10 +770,8 @@ int main() {
     Logger::info("[INFO] [%s:%3d]: Initial client: serverUri=%s, brokerID=%s, userID=%s, version=%s.", __FUNCTION__, __LINE__,
         TRADE_SERVER_URI, BROKER_ID, USER_ID, CThostFtdcTraderApi::GetApiVersion());
     
-    doSleep(5000);
     pTraderApi->Init();  // Start connecting
 
-    doSleep(5000);
     // tradeClient->queryInstrument("GC2202-CME");
     // doSleep(5000);
     // tradeClient->queryInstrument("GC2203-CME");
