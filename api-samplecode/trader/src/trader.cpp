@@ -250,8 +250,8 @@ protected:
         // Logger::info("[INFO] [%s:%3d]: Filled order: BrokerID=%s, InvestorID=%s, OrderRef=%s, UserID=%s, ExchangeID=%s, TradeID=%s, orderLocalID=%s, instrumentID=%s, direction=%s, volume=%d, price=%f, tradeDate=%s, TradeTime=%s, OrderSysID=%s, TradingRole=%s, ExchangeInstID=%s, HedgeFlag=%s, OffsetFlag=%s, TradeType=%s, PriceSource=%s, BusinessUnit=%s, TradingDay=%s, TradeSource=%s.", __FUNCTION__, __LINE__,
         //     trade->BrokerID, trade->InvestorID, trade->OrderRef, trade->UserID, trade->ExchangeID, trade->TradeID, trade->OrderLocalID, trade->InstrumentID, trade->Direction == THOST_FTDC_D_Buy ? "buy" : "sell", trade->Volume, trade->Price, trade->TradeDate, trade->TradeTime, trade->OrderSysID, TradingRole, trade->ExchangeInstID, HedgeFlag, OffsetFlag, TradeType, PriceSource, trade->BusinessUnit, trade->TradingDay, TradeSource);
 
-            Logger::info("[INFO] [%s:%3d]: Traded order: orderRef=%s, orderLocalID=%s, instrumentID=%s, direction=%s, volume=%d, price=%f, tradeDate=%s.", __FUNCTION__, __LINE__,
-                trade->OrderRef, trade->OrderLocalID, trade->InstrumentID, trade->Direction == THOST_FTDC_D_Buy ? "buy" : "sell", trade->Volume, trade->Price, trade->TradeDate);
+            Logger::info("[INFO] [%s:%3d]: Traded order: orderRef=%s, orderLocalID=%s, instrumentID=%s, direction=%s, volume=%d, price=%f, tradeDate=%s, TradeTime=%s, TradingDay=%s.", __FUNCTION__, __LINE__,
+                trade->OrderRef, trade->OrderLocalID, trade->InstrumentID, trade->Direction == THOST_FTDC_D_Buy ? "buy" : "sell", trade->Volume, trade->Price, trade->TradeDate, trade->TradeTime, trade->TradingDay);
         }
     }
     virtual void OnRspQryTrade(CThostFtdcTradeField *trade, CThostFtdcRspInfoField *status, int requestID, bool isLast) {
@@ -854,13 +854,18 @@ int main() {
     // doSleep(1000);
     // tradeClient->queryTrade("ES2206-CME");
     // doSleep(1000);
+    Logger::info("---------------------------------------------------------------------------------------------------------------");
     tradeClient->queryInvestorPosition("NQ2209-CME");
+    Logger::info("---------------------------------------------------------------------------------------------------------------");
     doSleep(1000);
     tradeClient->queryTradingAccount();
+    Logger::info("---------------------------------------------------------------------------------------------------------------");
     doSleep(1000);
     tradeClient->queryInstrumentMarginRate("NQ2209-CME");
+    Logger::info("---------------------------------------------------------------------------------------------------------------");
     doSleep(1000);
     tradeClient->queryInvestorPositionDetail("NQ2209-CME");
+    Logger::info("---------------------------------------------------------------------------------------------------------------");
     doSleep(5000);
     // Destroy the instance and release resources
     pTraderApi->RegisterSpi(NULL);
