@@ -645,7 +645,7 @@ public:
         strcpy(field.InstrumentID, instrumentID);
         //strcpy(field.OrderRef, "1234567");
         //strcpy(field.ExchangeID, "");
-        strcpy(field.OrderSysID, "MT1SooYM");
+        strcpy(field.OrderSysID, "MT1Xxd2t");
         // strcpy(field.InsertTimeStart, "");    // The Format of TradeTimeStart: HH:mm:ss, e.g: 09:30:00
         // strcpy(field.InsertTimeEnd, "");      // The Format of TradeTimeEnd  : HH:mm:ss, e.g: 15:00:00
         int rtnCode = tradeApi->ReqQryOrder(&field, nextRequestID());
@@ -841,7 +841,7 @@ int main() {
     //tradeClient->queryInstrument("GC2204-CME");
     //doSleep(5000);
     Logger::info("---------------------------------------------------------------------------------------------------------------");
-    tradeClient->insertOrder("NQ2209-CME", true, 14710.0, 4, "12345678");
+    //tradeClient->insertOrder("NQ2209-CME", true, 14710.0, 4, "12345678");
      doSleep(1000);
     Logger::info("---------------------------------------------------------------------------------------------------------------");
     tradeClient->queryOrder("NQ2209-CME");
@@ -854,13 +854,13 @@ int main() {
     // doSleep(1000);
     // tradeClient->queryTrade("ES2206-CME");
     // doSleep(1000);
-    // tradeClient->queryInvestorPosition("ES2206-CME");
-    // doSleep(1000);
-    // tradeClient->queryTradingAccount();
-    // doSleep(1000);
-    // tradeClient->queryInstrumentMarginRate("ES2206-CME");
-    // doSleep(1000);
-    // tradeClient->queryInvestorPositionDetail("ES2206-CME");
+    tradeClient->queryInvestorPosition("NQ2209-CME");
+    doSleep(1000);
+    tradeClient->queryTradingAccount();
+    doSleep(1000);
+    tradeClient->queryInstrumentMarginRate("NQ2209-CME");
+    doSleep(1000);
+    tradeClient->queryInvestorPositionDetail("NQ2209-CME");
     doSleep(5000);
     // Destroy the instance and release resources
     pTraderApi->RegisterSpi(NULL);
