@@ -841,7 +841,7 @@ int main() {
     //tradeClient->queryInstrument("GC2204-CME");
     //doSleep(5000);
     Logger::info("---------------------------------------------------------------------------------------------------------------");
-    //tradeClient->insertOrder("NQ2209-CME", true, 14710.0, 9, "1234567");
+    tradeClient->insertOrder("NQ2209-CME", true, 14710.0, 4, "12345678");
      doSleep(1000);
     Logger::info("---------------------------------------------------------------------------------------------------------------");
     tradeClient->queryOrder("NQ2209-CME");
