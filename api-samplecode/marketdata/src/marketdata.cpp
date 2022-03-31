@@ -216,7 +216,7 @@ int main()
     CThostFtdcMdApi *pMdApi = CThostFtdcMdApi::CreateFtdcMdApi();
     TestMdClient *mdClient = new TestMdClient(pMdApi);
 
-    myfile.open("price.csv", std::ios_base::app);
+    myfile.open("price_new.csv", std::ios_base::app);
 
     pMdApi->RegisterSpi(mdClient);
     pMdApi->RegisterFront((char *)MD_SERVER_URI);
